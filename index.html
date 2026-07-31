@@ -91,7 +91,7 @@ h2 .k{color:var(--gold)}
 .rise.in{opacity:1;transform:none}
 /* --- keeper cards --- */
 .court{display:grid;gap:16px}
-.kc{position:relative;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;overflow:hidden;
+.kc{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;overflow:hidden;
  background:linear-gradient(150deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:18px;
  padding:26px 26px;transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s}
 .kc::before{content:attr(data-n);position:absolute;right:-6px;top:-38px;font-family:var(--cond);font-weight:700;
@@ -108,6 +108,29 @@ h2 .k{color:var(--gold)}
 .kc .keep{align-self:start;font:700 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);
  background:linear-gradient(var(--pur),var(--pur-dk));border-radius:999px;padding:10px 15px;white-space:nowrap;
  box-shadow:0 8px 26px -12px rgba(154,99,214,.9)}
+.kbust{width:106px;height:106px;border-radius:50%;flex-shrink:0;align-self:center;box-shadow:0 12px 30px -14px #000}
+.kc .who{min-width:0}
+/* roster avatars */
+.plL{display:flex;align-items:center;gap:10px;min-width:0}
+.rav{width:34px;height:34px;border-radius:50%;flex-shrink:0}
+/* MFL cta button */
+.mflbtn{display:inline-flex;align-items:center;gap:9px;font:700 12px/1 var(--mono);letter-spacing:.12em;
+ text-transform:uppercase;color:#12100a;background:linear-gradient(100deg,var(--gold),var(--gold2));
+ padding:14px 22px;border-radius:999px;text-decoration:none;box-shadow:0 14px 32px -14px rgba(231,197,101,.8);
+ transition:transform .3s,box-shadow .3s}
+.mflbtn:hover{transform:translateY(-2px);box-shadow:0 20px 42px -16px rgba(231,197,101,.95)}
+/* 2025 recap */
+.recap{margin-top:22px;text-align:center}
+.statrow{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.stat{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:15px;
+ padding:16px 20px;min-width:120px}
+.stat .v{font-family:var(--cond);font-weight:700;font-size:34px;color:var(--gold);line-height:1;letter-spacing:.01em}
+.stat .l{font:600 10px/1.3 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-top:8px}
+.run{max-width:60ch;margin:22px auto 0;color:var(--soft);font-size:15.5px;line-height:1.7}
+.run b{color:var(--ink)}
+.run .hl{color:var(--gold);font-weight:700}
+.recap .cta{margin-top:26px}
+.note2026{margin-top:16px;font:600 12px/1.6 var(--mono);color:var(--faint);letter-spacing:.03em}
 /* --- roster --- */
 .roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
 .pos{background:rgba(255,255,255,.018);border:1px solid var(--line);border-radius:16px;padding:16px 18px;
@@ -133,7 +156,8 @@ h2 .k{color:var(--gold)}
 .foot img{width:58px;height:58px;opacity:.8;margin-bottom:12px;filter:drop-shadow(0 0 14px rgba(154,99,214,.4))}
 .foot .cr{color:var(--gold);text-transform:uppercase;letter-spacing:.16em}
 a{color:var(--gold)}
-@media (max-width:560px){.kc{grid-template-columns:1fr}.kc .keep{justify-self:start}
+@media (max-width:560px){.kc{grid-template-columns:auto 1fr}.kc .keep{grid-column:1/-1;justify-self:start}
+ .kbust{width:80px;height:80px}
  .emblem{width:min(360px,72vw);margin-bottom:2px}
  html{scroll-snap-type:y proximity}
  .panel{padding:52px 0}}
@@ -178,6 +202,7 @@ a{color:var(--gold)}
   <p class="sub rise">Three kept. Two premium backs and an ascending receiver — the young core the crown is built on.</p>
   <div class="court">
    <div class="kc rise" data-n="1">
+    <img class="kbust" src="img/jeanty.png" alt="Ashton Jeanty">
     <div class="who"><div class="rd">Round 1 · Rookie exception</div>
      <div class="nm">Ashton Jeanty</div>
      <div class="meta">RB · LAS VEGAS RAIDERS · 6TH OVERALL '25</div>
@@ -185,6 +210,7 @@ a{color:var(--gold)}
      <div class="note">Led all rookie backs in rushing and scrimmage yards. First keeper of his kind in league history.</div></div>
     <div class="keep">Kept · R1</div></div>
    <div class="kc rise" data-n="2">
+    <img class="kbust" src="img/hampton.png" alt="Omarion Hampton">
     <div class="who"><div class="rd">Round 2</div>
      <div class="nm">Omarion Hampton</div>
      <div class="meta">RB · LOS ANGELES CHARGERS · 22ND OVERALL '25</div>
@@ -192,6 +218,7 @@ a{color:var(--gold)}
      <div class="note">A workhorse before a Week-5 ankle. The LA backfield is his to command.</div></div>
     <div class="keep">Kept · R2</div></div>
    <div class="kc rise" data-n="3">
+    <img class="kbust" src="img/mcmillan.png" alt="Tetairoa McMillan">
     <div class="who"><div class="rd">Round 3</div>
      <div class="nm">Tetairoa McMillan</div>
      <div class="meta">WR · CAROLINA PANTHERS · 8TH OVERALL '25</div>
@@ -207,33 +234,42 @@ a{color:var(--gold)}
   <p class="sub rise">Full squad, current. <b style="color:var(--gold)">Gold = kept.</b></p>
   <div class="roster">
    <div class="pos rise"><div class="ph">Quarterback <span>QB</span></div>
-    <div class="pl"><span class="pn">Jalen Hurts</span><span class="pt">PHI</span></div>
-    <div class="pl"><span class="pn">Dak Prescott</span><span class="pt">DAL</span></div></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/hurts.png" alt=""><span class="pn">Jalen Hurts</span></span><span class="pt">PHI</span></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/prescott.png" alt=""><span class="pn">Dak Prescott</span></span><span class="pt">DAL</span></div></div>
    <div class="pos rise"><div class="ph">Running Back <span>RB</span></div>
-    <div class="pl"><span class="pn kept">Ashton Jeanty<span class="kb">K</span></span><span class="pt">LV</span></div>
-    <div class="pl"><span class="pn kept">Omarion Hampton<span class="kb">K</span></span><span class="pt">LAC</span></div>
-    <div class="pl"><span class="pn">Tony Pollard</span><span class="pt">TEN</span></div>
-    <div class="pl"><span class="pn">Tank Bigsby</span><span class="pt">PHI</span></div>
-    <div class="pl"><span class="pn">Tyler Allgeier</span><span class="pt">ARI</span></div></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/jeanty.png" alt=""><span class="pn kept">Ashton Jeanty<span class="kb">K</span></span></span><span class="pt">LV</span></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/hampton.png" alt=""><span class="pn kept">Omarion Hampton<span class="kb">K</span></span></span><span class="pt">LAC</span></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/pollard.png" alt=""><span class="pn">Tony Pollard</span></span><span class="pt">TEN</span></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/bigsby.png" alt=""><span class="pn">Tank Bigsby</span></span><span class="pt">PHI</span></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/allgeier.png" alt=""><span class="pn">Tyler Allgeier</span></span><span class="pt">ARI</span></div></div>
    <div class="pos rise"><div class="ph">Wide Receiver <span>WR</span></div>
-    <div class="pl"><span class="pn kept">Tetairoa McMillan<span class="kb">K</span></span><span class="pt">CAR</span></div>
-    <div class="pl"><span class="pn">Khalil Shakir</span><span class="pt">BUF</span></div>
-    <div class="pl"><span class="pn">Jordan Addison</span><span class="pt">MIN</span></div>
-    <div class="pl"><span class="pn">Deebo Samuel</span><span class="pt">SF</span></div></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/mcmillan.png" alt=""><span class="pn kept">Tetairoa McMillan<span class="kb">K</span></span></span><span class="pt">CAR</span></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/shakir.png" alt=""><span class="pn">Khalil Shakir</span></span><span class="pt">BUF</span></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/addison.png" alt=""><span class="pn">Jordan Addison</span></span><span class="pt">MIN</span></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/deebo.png" alt=""><span class="pn">Deebo Samuel</span></span><span class="pt">SF</span></div></div>
    <div class="pos rise"><div class="ph">Tight End <span>TE</span></div>
-    <div class="pl"><span class="pn">Hunter Henry</span><span class="pt">NE</span></div>
-    <div class="pl"><span class="pn">Kyle Pitts</span><span class="pt">ATL</span></div></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/henry.png" alt=""><span class="pn">Hunter Henry</span></span><span class="pt">NE</span></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/pitts.png" alt=""><span class="pn">Kyle Pitts</span></span><span class="pt">ATL</span></div></div>
    <div class="pos rise"><div class="ph">Defense / Kicker <span>D/PK</span></div>
-    <div class="pl"><span class="pn">Texans</span><span class="pt">DEF</span></div>
-    <div class="pl"><span class="pn">Buccaneers</span><span class="pt">PK</span></div></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/def_texans.png" alt=""><span class="pn">Texans</span></span><span class="pt">DEF</span></div>
+    <div class="pl"><span class="plL"><img class="rav" src="img/pk_bucs.png" alt=""><span class="pn">Buccaneers</span></span><span class="pt">PK</span></div></div>
   </div>
  </section>
 
  <section class="sec panel">
   <div class="kicker rise">03 · The Campaign</div>
   <h2 class="rise">The <span class="k">Season</span></h2>
-  <div class="season rise">
-   <p>Standings, schedule and live scores wire in here off the league feed once 2026 kicks off. Keeper deadline: <span class="dl">Sept 3</span>.</p>
+  <p class="sub rise">The Joe G Army's final ride, 2025 — before the Reign.</p>
+  <div class="recap rise">
+   <div class="statrow">
+    <div class="stat"><div class="v">10-4</div><div class="l">Record</div></div>
+    <div class="stat"><div class="v">#2</div><div class="l">Seed</div></div>
+    <div class="stat"><div class="v">130.2</div><div class="l">Avg PF</div></div>
+    <div class="stat"><div class="v">2nd</div><div class="l">Final Finish</div></div>
+   </div>
+   <p class="run">Ten wins, a <b>four-game closing streak</b>, and the <b>#2 seed</b> — a first-round bye. The Army dismantled the 5-seed in the semifinal <span class="hl">157.1-95.2</span>, then ran into O-Bijan Kenobi in the title game and fell <span class="hl">99.9-153.2</span>. One game short of the crown. The Joe G Army retires as <b>2025 runner-up</b> — and the Reign begins.</p>
+   <div class="cta"><a class="mflbtn" href="https://www44.myfantasyleague.com/2026/options?L=19497&amp;F=0007&amp;O=07" target="_blank" rel="noopener">View on MyFantasyLeague →</a></div>
+   <div class="note2026">2026 standings, schedule &amp; live scores wire in here once the season kicks off · Keeper deadline <span style="color:var(--gold)">Sept 3</span></div>
   </div>
   <div class="foot rise"><img src="crest.png" alt="">
    <span class="cr">Infamous Reign · Est. 2008 · The Palace</span><br>
