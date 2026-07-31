@@ -5,122 +5,270 @@
 <meta property="og:description" content="The King names his court. Est. 2008 · The Palace.">
 <meta property="og:image" content="poster.jpg">
 <style>
-:root{--bg:#0b0a0d;--panel:#141118;--panel2:#100d15;--ink:#f4efe4;--soft:#b7ad98;--faint:#7d7566;
- --gold:#e2bc5c;--gold2:#c69c42;--pur:#8b56c4;--pur-dk:#5f3496;--line:#2a2333;
- --sans:"Futura","Avenir Next",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;}
-*{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
- background-image:radial-gradient(1100px 520px at 15% -8%,rgba(139,86,196,.18),transparent),radial-gradient(900px 480px at 108% 4%,rgba(226,188,92,.08),transparent);}
-.wrap{max-width:1000px;margin:0 auto;padding:0 22px 100px}
-/* hero */
-.hero{text-align:center;padding:48px 0 8px}
-.hero img.crest{width:150px;height:150px;filter:drop-shadow(0 8px 30px rgba(139,86,196,.4))}
-.hero h1{font-size:clamp(40px,10vw,86px);letter-spacing:.02em;line-height:.98;margin:16px 0 6px;text-transform:uppercase;font-weight:700}
-.hero h1 .r{color:var(--gold)}
-.tag{display:inline-flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
-.tag span{font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--soft);
- background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:9px 12px}
-.tag span b{color:var(--gold)}
-.rule{height:2px;width:120px;margin:26px auto 0;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-/* video */
-.videowrap{margin:34px 0 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 30px 80px -40px #000;background:#000}
-.videowrap video{width:100%;display:block;aspect-ratio:16/9}
-.caption{text-align:center;color:var(--faint);font:500 13px/1.5 var(--mono);margin-top:10px;letter-spacing:.04em}
-/* section head */
-h2{font-size:13px;font-family:var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:56px 0 4px;display:flex;align-items:center;gap:14px}
-h2::after{content:"";flex:1;height:1px;background:var(--line)}
-.sub{color:var(--faint);font-size:15px;margin:4px 0 0}
-/* keeper cards */
-.court{margin-top:20px;display:grid;gap:14px}
-.kc{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;background:linear-gradient(180deg,var(--panel),var(--panel2));
- border:1px solid var(--line);border-radius:16px;padding:16px 20px;position:relative;overflow:hidden}
-.kc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--gold),var(--pur))}
-.kc .num{font:800 40px/1 var(--mono);color:var(--gold2);min-width:44px;text-align:center}
-.kc .who .nm{font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.01em}
-.kc .who .meta{font:600 12px/1 var(--mono);color:var(--faint);letter-spacing:.03em;margin-top:4px}
-.kc .who .st{margin-top:9px;font:800 14px/1.2 var(--mono);color:var(--gold);letter-spacing:.02em}
-.kc .who .note{margin-top:6px;color:var(--soft);font-size:14px}
-.kc .keep{font:700 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--pur-dk);border-radius:8px;padding:9px 12px;white-space:nowrap}
-/* roster */
-.roster{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
-.pos-group{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
-.pos-group .ph{font:700 12px/1 var(--mono);letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;display:flex;justify-content:space-between}
-.pos-group .ph span{color:var(--faint)}
-.pl{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-top:1px solid var(--line);gap:8px}
+:root{
+ --bg:#08070a;--bg2:#0d0b11;--panel:#141019;--panel2:#0f0c15;
+ --ink:#f6f1e6;--soft:#b8ae99;--faint:#7a7264;
+ --gold:#e7c565;--gold2:#c99f3d;--gold-lo:#9c7a2b;
+ --pur:#9a63d6;--pur-dk:#5f3496;--line:#241d30;
+ --sans:"Futura","Avenir Next",system-ui,-apple-system,"Segoe UI",sans-serif;
+ --cond:"Futura Condensed","DIN Condensed","Oswald","Bebas Neue","Arial Narrow","Futura",var(--sans);
+ --mono:ui-monospace,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;
+ -webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* --- atmosphere layers (fixed, behind everything) --- */
+#embers{position:fixed;inset:0;z-index:0;pointer-events:none}
+.grain{position:fixed;inset:-200%;z-index:2;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+ animation:grain 5s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-6%,4%)}40%{transform:translate(4%,-8%)}
+ 60%{transform:translate(-4%,6%)}80%{transform:translate(8%,-4%)}100%{transform:translate(0,0)}}
+.vign{position:fixed;inset:0;z-index:1;pointer-events:none;
+ background:radial-gradient(120% 90% at 50% 30%,transparent 40%,rgba(0,0,0,.55) 100%)}
+.wrap{position:relative;z-index:3;max-width:1020px;margin:0 auto;padding:0 22px 120px}
+/* --- hero / cold open --- */
+.hero{position:relative;text-align:center;min-height:96vh;display:flex;flex-direction:column;justify-content:center;
+ align-items:center;padding:60px 0 30px}
+.hero::before,.hero::after{content:"";position:absolute;left:50%;transform:translateX(-50%);width:min(560px,86%);
+ height:1px;background:linear-gradient(90deg,transparent,var(--gold-lo),transparent);opacity:.5}
+.hero::before{top:34px}.hero::after{bottom:8px}
+.eyebrow{font:600 12px/1 var(--mono);letter-spacing:.42em;text-transform:uppercase;color:var(--gold-lo);
+ margin-bottom:26px;opacity:0;animation:fade 1.1s .2s forwards}
+.crest{width:158px;height:158px;filter:drop-shadow(0 0 34px rgba(154,99,214,.5)) drop-shadow(0 0 10px rgba(231,197,101,.35));
+ opacity:0;transform:scale(.86);animation:crestin 1.4s .35s cubic-bezier(.2,.8,.2,1) forwards}
+.crest.glow{animation:crestin 1.4s .35s cubic-bezier(.2,.8,.2,1) forwards,breathe 5.5s 2s ease-in-out infinite}
+@keyframes crestin{to{opacity:1;transform:scale(1)}}
+@keyframes breathe{0%,100%{filter:drop-shadow(0 0 30px rgba(154,99,214,.45)) drop-shadow(0 0 8px rgba(231,197,101,.3))}
+ 50%{filter:drop-shadow(0 0 52px rgba(154,99,214,.72)) drop-shadow(0 0 18px rgba(231,197,101,.55))}}
+h1.mark{font-family:var(--cond);font-weight:700;font-size:clamp(52px,15vw,148px);line-height:.9;margin:20px 0 4px;
+ text-transform:uppercase;letter-spacing:.015em;
+ background:linear-gradient(100deg,#8a7a52 0%,#f3e2a6 20%,var(--gold) 34%,#fffbe9 46%,var(--gold) 58%,#b08f38 80%,#8a7a52 100%);
+ background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+ -webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 24px rgba(231,197,101,.18));
+ opacity:0;animation:markin 1s .6s forwards,sheen 7s 1.8s linear infinite}
+h1.mark .l2{display:block;color:transparent}
+@keyframes markin{to{opacity:1}}
+@keyframes sheen{0%{background-position:120% 0}100%{background-position:-120% 0}}
+.reignword{color:var(--gold)}
+.subline{font:600 13px/1.7 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--soft);
+ margin-top:16px;opacity:0;animation:fade 1s 1s forwards}
+.subline b{color:var(--gold)}
+.chips{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:26px;opacity:0;animation:fade 1s 1.2s forwards}
+.chips span{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--soft);
+ background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:999px;padding:9px 14px;backdrop-filter:blur(6px)}
+.chips span b{color:var(--gold)}
+.scrollcue{margin-top:44px;font:600 10px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;color:var(--faint);
+ opacity:0;animation:fade 1s 1.6s forwards}
+.scrollcue::after{content:"";display:block;width:1px;height:34px;margin:12px auto 0;
+ background:linear-gradient(var(--gold-lo),transparent);animation:cue 2.4s ease-in-out infinite}
+@keyframes cue{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+@keyframes fade{to{opacity:1}}
+/* --- cinema / video --- */
+.cinema{position:relative;margin:8px 0 0;padding:16px;border-radius:20px;
+ background:radial-gradient(120% 140% at 50% 0%,rgba(154,99,214,.12),transparent 60%);}
+.screen{position:relative;border-radius:14px;overflow:hidden;background:#000;
+ border:1px solid var(--line);box-shadow:0 40px 120px -50px #000,0 0 0 1px rgba(231,197,101,.08),0 0 70px -30px rgba(154,99,214,.5)}
+.screen video{width:100%;display:block;aspect-ratio:16/9}
+.cap{text-align:center;color:var(--faint);font:600 12px/1.6 var(--mono);margin-top:14px;letter-spacing:.18em;text-transform:uppercase}
+/* --- section headers --- */
+.sec{margin-top:8vh}
+h2{font-family:var(--cond);font-weight:700;font-size:clamp(30px,6vw,52px);line-height:1;text-transform:uppercase;
+ letter-spacing:.02em;margin:0 0 6px;color:var(--ink)}
+h2 .k{color:var(--gold)}
+.kicker{font:600 11px/1 var(--mono);letter-spacing:.34em;text-transform:uppercase;color:var(--gold-lo);margin-bottom:14px}
+.sub{color:var(--soft);font-size:15.5px;max-width:62ch;margin:0 0 22px}
+.hr{height:1px;background:linear-gradient(90deg,var(--gold-lo),transparent);margin:14px 0 0}
+/* --- reveal on scroll --- */
+.rise{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.rise.in{opacity:1;transform:none}
+/* --- keeper cards --- */
+.court{display:grid;gap:16px}
+.kc{position:relative;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;overflow:hidden;
+ background:linear-gradient(150deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:18px;
+ padding:26px 26px;transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s}
+.kc::before{content:attr(data-n);position:absolute;right:-6px;top:-38px;font-family:var(--cond);font-weight:700;
+ font-size:210px;line-height:1;color:#fff;opacity:.035;pointer-events:none}
+.kc::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(var(--gold),var(--pur))}
+.kc:hover{transform:translateY(-4px);border-color:rgba(231,197,101,.35);
+ box-shadow:0 30px 70px -40px #000,0 0 60px -30px rgba(154,99,214,.6)}
+.kc .who .rd{font:700 11px/1 var(--mono);letter-spacing:.16em;color:var(--gold-lo);text-transform:uppercase}
+.kc .who .nm{font-family:var(--cond);font-weight:700;font-size:clamp(28px,5.5vw,42px);line-height:1;text-transform:uppercase;
+ margin:8px 0 6px;letter-spacing:.01em}
+.kc .who .meta{font:600 12px/1 var(--mono);color:var(--faint);letter-spacing:.03em}
+.kc .who .st{margin-top:14px;font:800 15px/1.3 var(--mono);color:var(--gold);letter-spacing:.02em}
+.kc .who .note{margin-top:8px;color:var(--soft);font-size:14.5px;max-width:46ch}
+.kc .keep{align-self:start;font:700 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);
+ background:linear-gradient(var(--pur),var(--pur-dk));border-radius:999px;padding:10px 15px;white-space:nowrap;
+ box-shadow:0 8px 26px -12px rgba(154,99,214,.9)}
+/* --- roster --- */
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
+.pos{background:rgba(255,255,255,.018);border:1px solid var(--line);border-radius:16px;padding:16px 18px;
+ backdrop-filter:blur(4px);transition:border-color .4s}
+.pos:hover{border-color:rgba(231,197,101,.22)}
+.pos .ph{font:700 12px/1 var(--mono);letter-spacing:.14em;color:var(--gold);text-transform:uppercase;
+ margin-bottom:12px;display:flex;justify-content:space-between}
+.pos .ph span{color:var(--faint)}
+.pl{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-top:1px solid var(--line);gap:8px}
 .pl:first-of-type{border-top:none}
 .pl .pn{font-weight:650;font-size:15.5px}
 .pl .pn.kept{color:var(--gold)}
 .pl .pt{font:600 11px/1 var(--mono);color:var(--faint)}
-.pl .kb{font:700 9px/1 var(--mono);color:var(--pur);border:1px solid currentColor;border-radius:4px;padding:3px 5px;letter-spacing:.04em;margin-left:6px}
-.foot{margin-top:60px;text-align:center;color:var(--faint);font:600 12px/1.7 var(--mono);letter-spacing:.06em;border-top:1px solid var(--line);padding-top:28px}
-.foot img{width:56px;height:56px;opacity:.85;margin-bottom:10px}
+.kb{font:700 9px/1 var(--mono);color:var(--pur);border:1px solid currentColor;border-radius:4px;padding:3px 5px;
+ letter-spacing:.04em;margin-left:7px}
+/* --- season / foot --- */
+.season{background:radial-gradient(120% 140% at 50% 0%,rgba(231,197,101,.06),transparent 60%);
+ border:1px dashed var(--line);border-radius:18px;padding:30px 28px;text-align:center}
+.season p{margin:0 auto;max-width:56ch;color:var(--soft)}
+.season .dl{color:var(--gold);font-weight:700}
+.foot{margin-top:80px;text-align:center;color:var(--faint);font:600 12px/1.9 var(--mono);letter-spacing:.1em;
+ border-top:1px solid var(--line);padding-top:34px}
+.foot img{width:58px;height:58px;opacity:.8;margin-bottom:12px;filter:drop-shadow(0 0 14px rgba(154,99,214,.4))}
+.foot .cr{color:var(--gold);text-transform:uppercase;letter-spacing:.16em}
 a{color:var(--gold)}
+@media (max-width:560px){.kc{grid-template-columns:1fr}.kc .keep{justify-self:start}}
+@media (prefers-reduced-motion:reduce){
+ *{animation:none!important}.rise{opacity:1;transform:none;transition:none}
+ .grain{display:none}h1.mark{opacity:1}.crest{opacity:1;transform:none}
+ .eyebrow,.subline,.chips,.scrollcue{opacity:1}
+}
 </style></head><body>
+<canvas id="embers"></canvas>
+<div class="vign"></div>
+<div class="grain"></div>
+
 <div class="wrap">
  <header class="hero">
-  <img class="crest" src="icon.png" alt="Infamous Reign crest">
-  <h1>Infamous <span class="r">Reign</span></h1>
-  <div class="tag">
-   <span>🏟 <b>The Palace</b></span><span>👑 EST. <b>2008</b></span>
-   <span>National Fantasy Keeper League</span><span>Owner: <b>Joe G</b></span>
+  <div class="eyebrow">National Fantasy Keeper League</div>
+  <img class="crest glow" src="icon.png" alt="Infamous Reign crest">
+  <h1 class="mark">Infamous<span class="l2 reignword">Reign</span></h1>
+  <div class="subline">The King names his court · <b>2026</b></div>
+  <div class="chips">
+   <span>🏟 <b>The Palace</b></span><span>👑 Est. <b>2008</b></span>
+   <span>Owner: <b>Joe G</b></span><span>Franchise <b>0007</b></span>
   </div>
-  <div class="rule"></div>
-  <div class="videowrap">
+  <div class="scrollcue">The Unveiling</div>
+ </header>
+
+ <section class="cinema rise">
+  <div class="screen">
    <video controls preload="metadata" poster="poster.jpg" playsinline>
     <source src="reveal.mp4" type="video/mp4">
     Your browser can't play this video — <a href="reveal.mp4">download it</a>.
    </video>
   </div>
-  <div class="caption">▲ THE 2026 UNVEILING — the King names his court.</div>
- </header>
+  <div class="cap">▲ The 2026 Unveiling — the King names his court</div>
+ </section>
 
- <h2>The Court · 2026 Keepers</h2>
- <p class="sub">Three kept. Two premium backs and an ascending WR — the young core.</p>
- <div class="court">
-  <div class="kc"><div class="num">1</div><div class="who">
-    <div class="nm">Ashton Jeanty</div><div class="meta">RB · Las Vegas Raiders · 6th overall '25</div>
-    <div class="st">975 RUSH · 1,321 SCRIMMAGE · 10 TD</div>
-    <div class="note">Led all rookie RBs in rushing &amp; scrimmage yards.</div></div>
+ <section class="sec">
+  <div class="kicker rise">01 · The Keepers</div>
+  <h2 class="rise">The <span class="k">Court</span></h2>
+  <p class="sub rise">Three kept. Two premium backs and an ascending receiver — the young core the crown is built on.</p>
+  <div class="court">
+   <div class="kc rise" data-n="1">
+    <div class="who"><div class="rd">Round 1 · Rookie exception</div>
+     <div class="nm">Ashton Jeanty</div>
+     <div class="meta">RB · LAS VEGAS RAIDERS · 6TH OVERALL '25</div>
+     <div class="st">975 RUSH · 1,321 SCRIMMAGE · 10 TD</div>
+     <div class="note">Led all rookie backs in rushing and scrimmage yards. First keeper of his kind in league history.</div></div>
     <div class="keep">Kept · R1</div></div>
-  <div class="kc"><div class="num">2</div><div class="who">
-    <div class="nm">Omarion Hampton</div><div class="meta">RB · Los Angeles Chargers · 22nd overall '25</div>
-    <div class="st">737 SCRIMMAGE · 5 TD · 9 GAMES</div>
-    <div class="note">A workhorse before a Week-5 ankle. The LA backfield is his.</div></div>
+   <div class="kc rise" data-n="2">
+    <div class="who"><div class="rd">Round 2</div>
+     <div class="nm">Omarion Hampton</div>
+     <div class="meta">RB · LOS ANGELES CHARGERS · 22ND OVERALL '25</div>
+     <div class="st">737 SCRIMMAGE · 5 TD · 9 GAMES</div>
+     <div class="note">A workhorse before a Week-5 ankle. The LA backfield is his to command.</div></div>
     <div class="keep">Kept · R2</div></div>
-  <div class="kc"><div class="num">3</div><div class="who">
-    <div class="nm">Tetairoa McMillan</div><div class="meta">WR · Carolina Panthers · 8th overall '25</div>
-    <div class="st">70 REC · 1,014 YDS · 7 TD</div>
-    <div class="note">2025 AP Offensive Rookie of the Year.</div></div>
+   <div class="kc rise" data-n="3">
+    <div class="who"><div class="rd">Round 3</div>
+     <div class="nm">Tetairoa McMillan</div>
+     <div class="meta">WR · CAROLINA PANTHERS · 8TH OVERALL '25</div>
+     <div class="st">70 REC · 1,014 YDS · 7 TD</div>
+     <div class="note">2025 AP Offensive Rookie of the Year. The ceiling is the story.</div></div>
     <div class="keep">Kept · R3</div></div>
- </div>
+  </div>
+ </section>
 
- <h2>The Roster</h2>
- <p class="sub">Full squad, current. <span style="color:var(--gold)">Gold = kept.</span></p>
- <div class="roster">
-  <div class="pos-group"><div class="ph">Quarterback <span>QB</span></div>
-   <div class="pl"><span class="pn">Jalen Hurts</span><span class="pt">PHI</span></div>
-   <div class="pl"><span class="pn">Dak Prescott</span><span class="pt">DAL</span></div></div>
-  <div class="pos-group"><div class="ph">Running Back <span>RB</span></div>
-   <div class="pl"><span class="pn kept">Ashton Jeanty<span class="kb">K</span></span><span class="pt">LV</span></div>
-   <div class="pl"><span class="pn kept">Omarion Hampton<span class="kb">K</span></span><span class="pt">LAC</span></div>
-   <div class="pl"><span class="pn">Tony Pollard</span><span class="pt">TEN</span></div>
-   <div class="pl"><span class="pn">Tank Bigsby</span><span class="pt">PHI</span></div>
-   <div class="pl"><span class="pn">Tyler Allgeier</span><span class="pt">ARI</span></div></div>
-  <div class="pos-group"><div class="ph">Wide Receiver <span>WR</span></div>
-   <div class="pl"><span class="pn kept">Tetairoa McMillan<span class="kb">K</span></span><span class="pt">CAR</span></div>
-   <div class="pl"><span class="pn">Khalil Shakir</span><span class="pt">BUF</span></div>
-   <div class="pl"><span class="pn">Jordan Addison</span><span class="pt">MIN</span></div>
-   <div class="pl"><span class="pn">Deebo Samuel</span><span class="pt">SF</span></div></div>
-  <div class="pos-group"><div class="ph">Tight End <span>TE</span></div>
-   <div class="pl"><span class="pn">Hunter Henry</span><span class="pt">NE</span></div>
-   <div class="pl"><span class="pn">Kyle Pitts</span><span class="pt">ATL</span></div></div>
-  <div class="pos-group"><div class="ph">Defense / Kicker <span>D/PK</span></div>
-   <div class="pl"><span class="pn">Texans</span><span class="pt">DEF</span></div>
-   <div class="pl"><span class="pn">Buccaneers</span><span class="pt">PK</span></div></div>
- </div>
+ <section class="sec">
+  <div class="kicker rise">02 · The Squad</div>
+  <h2 class="rise">The <span class="k">Roster</span></h2>
+  <p class="sub rise">Full squad, current. <b style="color:var(--gold)">Gold = kept.</b></p>
+  <div class="roster">
+   <div class="pos rise"><div class="ph">Quarterback <span>QB</span></div>
+    <div class="pl"><span class="pn">Jalen Hurts</span><span class="pt">PHI</span></div>
+    <div class="pl"><span class="pn">Dak Prescott</span><span class="pt">DAL</span></div></div>
+   <div class="pos rise"><div class="ph">Running Back <span>RB</span></div>
+    <div class="pl"><span class="pn kept">Ashton Jeanty<span class="kb">K</span></span><span class="pt">LV</span></div>
+    <div class="pl"><span class="pn kept">Omarion Hampton<span class="kb">K</span></span><span class="pt">LAC</span></div>
+    <div class="pl"><span class="pn">Tony Pollard</span><span class="pt">TEN</span></div>
+    <div class="pl"><span class="pn">Tank Bigsby</span><span class="pt">PHI</span></div>
+    <div class="pl"><span class="pn">Tyler Allgeier</span><span class="pt">ARI</span></div></div>
+   <div class="pos rise"><div class="ph">Wide Receiver <span>WR</span></div>
+    <div class="pl"><span class="pn kept">Tetairoa McMillan<span class="kb">K</span></span><span class="pt">CAR</span></div>
+    <div class="pl"><span class="pn">Khalil Shakir</span><span class="pt">BUF</span></div>
+    <div class="pl"><span class="pn">Jordan Addison</span><span class="pt">MIN</span></div>
+    <div class="pl"><span class="pn">Deebo Samuel</span><span class="pt">SF</span></div></div>
+   <div class="pos rise"><div class="ph">Tight End <span>TE</span></div>
+    <div class="pl"><span class="pn">Hunter Henry</span><span class="pt">NE</span></div>
+    <div class="pl"><span class="pn">Kyle Pitts</span><span class="pt">ATL</span></div></div>
+   <div class="pos rise"><div class="ph">Defense / Kicker <span>D/PK</span></div>
+    <div class="pl"><span class="pn">Texans</span><span class="pt">DEF</span></div>
+    <div class="pl"><span class="pn">Buccaneers</span><span class="pt">PK</span></div></div>
+  </div>
+ </section>
 
- <h2>The Season</h2>
- <p class="sub">Standings, schedule &amp; live scores wire in here once the 2026 season kicks off — pulled straight from the league feed. Keeper deadline: <span style="color:var(--gold)">Sept 3</span>.</p>
+ <section class="sec">
+  <div class="kicker rise">03 · The Campaign</div>
+  <h2 class="rise">The <span class="k">Season</span></h2>
+  <div class="season rise">
+   <p>Standings, schedule and live scores wire in here off the league feed once 2026 kicks off. Keeper deadline: <span class="dl">Sept 3</span>.</p>
+  </div>
+ </section>
 
- <div class="foot"><img src="icon.png" alt="">INFAMOUS REIGN · EST. 2008 · THE PALACE<br>ten teams. one crown. the other nine are playing for second.</div>
-</div></body></html>
+ <div class="foot rise"><img src="icon.png" alt="">
+  <span class="cr">Infamous Reign · Est. 2008 · The Palace</span><br>
+  Ten teams. One crown. The other nine are playing for second.</div>
+</div>
+
+<script>
+// drifting embers — lightweight canvas particle field
+(function(){
+ var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ if(reduce)return;
+ var c=document.getElementById('embers'),x=c.getContext('2d'),W,H,P=[];
+ function size(){W=c.width=innerWidth*devicePixelRatio;H=c.height=innerHeight*devicePixelRatio;}
+ size();addEventListener('resize',size);
+ var N=Math.min(70,Math.floor(innerWidth/16));
+ for(var i=0;i<N;i++)P.push(mk(true));
+ function mk(rand){return{
+  x:Math.random()*W,
+  y:rand?Math.random()*H:H+20,
+  r:(Math.random()*1.6+0.4)*devicePixelRatio,
+  s:(Math.random()*0.5+0.15)*devicePixelRatio,
+  d:(Math.random()-0.5)*0.3*devicePixelRatio,
+  a:Math.random()*0.5+0.15,
+  g:Math.random()<0.72
+ };}
+ function loop(){
+  x.clearRect(0,0,W,H);
+  for(var i=0;i<P.length;i++){var p=P[i];
+   p.y-=p.s;p.x+=p.d;p.a-=0.0009;
+   if(p.y<-20||p.a<=0){P[i]=mk(false);continue;}
+   x.beginPath();x.arc(p.x,p.y,p.r,0,6.283);
+   x.fillStyle=p.g?'rgba(231,197,101,'+p.a+')':'rgba(154,99,214,'+p.a+')';
+   x.shadowBlur=8*devicePixelRatio;x.shadowColor=x.fillStyle;x.fill();
+  }
+  requestAnimationFrame(loop);
+ }
+ loop();
+})();
+// scroll reveal
+(function(){
+ var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+ },{threshold:0.16,rootMargin:'0px 0px -8% 0px'});
+ document.querySelectorAll('.rise').forEach(function(el){io.observe(el);});
+})();
+</script>
+</body></html>
